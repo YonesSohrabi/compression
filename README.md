@@ -5,8 +5,8 @@ This is document for BriefLands Task.
 ### Getting Started with Setting up Environment
 
 ```
-git clone git@github.com:anilnabin25/docker-laravel-sample.git
-cd docker-laravel-sample
+git clone https://github.com/YonesSohrabi/compression.git
+cd compression
 sh docker/setup.sh
 docker-compose up -d
 ```
