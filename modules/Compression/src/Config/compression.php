@@ -6,5 +6,5 @@ return [
      * Allowed methods : zip | 7zip | tar
      */
 
-    'type' => 'tar'
+    'type' => env("COMPRESSION_TYPE",'tar')
 ];

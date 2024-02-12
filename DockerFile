@@ -1,0 +1,33 @@
+FROM php:8.1-apache
+WORKDIR /var/www/html
+
+RUN apt-get update \
+    && apt-get install -y \
+        zip \
+        unzip \
+        tar \
+        p7zip-full \
+        libzip-dev \
+        libpng-dev \
+        libjpeg-dev \
+        libfreetype6-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd zip pdo_mysql gettext intl mbstring
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Copy your application code to the container
+COPY . /var/www/html
+
+RUN composer install
+
+# Set permissions for Apache
+RUN chown -R www-data:www-data /var/www/html \
+    && a2enmod rewrite
+
+# Expose port 80
+EXPOSE 80
+
+# Start Apache server
+CMD ["apache2-foreground"]
+
